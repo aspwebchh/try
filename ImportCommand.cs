@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
@@ -21,10 +22,10 @@ namespace NetbarIpAddrImporter {
         }
 
         public void Execute( object parameter ) {
-            var netbarList = viewModel.NetbarList;
-            var result = Data.Import( netbarList.ToList() );
-            netbarList.Clear();
-            result.ForEach( netbarList.Add );
+            var result = Data.Import( viewModel.NetbarList.ToList() );
+            viewModel.UpdateNetbarList( result );
+            Data.SyncToGame( result );
+            MessageBox.Show( "导入游戏完成" );
         }
     }
 }

@@ -38,5 +38,10 @@ namespace NetbarIpAddrImporter {
                 return importCommand;
             }
         }
+
+        public void UpdateNetbarList( List<NetbarItem> netbarList ) {
+            this.netbarList.Clear();
+            netbarList.ForEach( this.netbarList.Add );
+        }
     }
 }

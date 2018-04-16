@@ -27,7 +27,7 @@ namespace NetbarIpAddrImporter {
             if( op.ShowDialog() == System.Windows.Forms.DialogResult.OK ) {
                 var dt = ExcelReader.Read( op.FileName );
                 var list = NetbarItem.Data2List( dt );
-                list.ForEach( viewModel.NetbarList.Add );
+                viewModel.UpdateNetbarList( list );
             }
         }
     }

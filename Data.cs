@@ -30,19 +30,19 @@ namespace NetbarIpAddrImporter {
             return tasks.Select( item => item.Result ).ToList();
         }
 
-        public static List<Tuple<int, string, string>> SyncToGame(List<Tuple<int, string, IPList>> dataList) {
+        public static void SyncToGame(List<NetbarItem> dataList) {
             var tasks = dataList.Select( item => {
                 return Task.Factory.StartNew( delegate {
-                    return SyncItem( item );
+                    SyncItem( item );
                 } );
-            } );
-            return tasks.Select( task => task.Result ).ToList();
+            } ).ToList();
+            tasks.ForEach( task => task.Wait() );
         }
 
-        public static Tuple<int, string, string> SyncItem( Tuple<int, string, IPList> item) {
-            var id = item.Item1;
-            var name = item.Item2;
-            var ipList = item.Item3;
+        private static void SyncItem( NetbarItem item ) {
+            var id = item.ID;
+            var name = item.Name;
+            var ipList = item.IPList;
 
             var themebar = new NetBarAPI.ThemeBar();
 
@@ -68,7 +68,13 @@ namespace NetbarIpAddrImporter {
             string sql = "update tb_netbar set _tmp_state = '" + themebar.Error + "',ibarid = " + themebar.iValue + " , ilevel = " + level + ", iapply = " + apply + ", iaudit=" + audit + "  where id = " + id;
             DbHelperSQL.Query( sql );
 
-            return Tuple.Create( item.Item1, item.Item2, themebar.Error );
+            if( themebar.Error == AUDIT_SUCCESS ) {
+                item.Status = NetbarItemStatus.SyncSuccess;
+            } else if( themebar.Error == AUDIT_IP_EXISTS ) {
+                item.Status = NetbarItemStatus.AlreadySync;
+            } else {
+                item.Status = NetbarItemStatus.SyncError;
+            }
         }
     }
 }

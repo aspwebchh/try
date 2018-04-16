@@ -9,7 +9,7 @@ using System.Collections.ObjectModel;
 
 namespace NetbarIpAddrImporter {
     enum NetbarItemStatus {
-        Normal, Database, SyncSuccess, SyncError
+        Normal, Database, SyncSuccess, SyncError, AlreadySync
     }
 
     class NetbarItem {
@@ -51,8 +51,10 @@ namespace NetbarIpAddrImporter {
                     return "同步成功";
                 } else if( Status == NetbarItemStatus.SyncError ) {
                     return "同步失败";
+                } else if( Status == NetbarItemStatus.AlreadySync ) {
+                    return "重复同步";
                 } else {
-                    return "位置状态";
+                    return "未知状态";
                 }
                 
             }
