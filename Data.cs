@@ -76,5 +76,32 @@ namespace NetbarIpAddrImporter {
                 item.Status = NetbarItemStatus.SyncError;
             }
         }
+
+        public static string Delete( int iBarId, int iNetbarId, string netbarName ) {
+            var themebar = new NetBarAPI.ThemeBar();
+
+            themebar.acBarName = netbarName;
+            themebar.iBarID = iBarId;
+            themebar.iLevel = 0;
+            themebar.iOprType = 2;
+            themebar.acIP1 = null;
+            themebar.acIP2 = null;
+            themebar.acIP3 = null;
+            themebar.acIP4 = null;
+            themebar.iNetBarId = iNetbarId;
+
+            themebar = api.iBindNetBar( themebar );
+
+
+            if( themebar.Error == AUDIT_SUCCESS ) {
+                return "操作成功";
+            } else if( themebar.Error == AUDIT_IP_EXISTS ) {
+                return "网吧已存在";
+            } else if( themebar.Error == AUDIT_UNKDOW ) {
+                return "网吧不存在";
+            } else {
+                return themebar.Error;
+            }
+        }
     }
 }

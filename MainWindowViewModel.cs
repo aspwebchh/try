@@ -16,9 +16,12 @@ namespace NetbarIpAddrImporter {
 
         private ImportCommand importCommand;
 
+        private DeleteCommand deleteCommand;
+
         public MainWindowViewModel() {
             loadExcelCommand = new LoadExcelCommand( this );
             importCommand = new ImportCommand( this );
+            deleteCommand = new DeleteCommand( this );
         }
 
         public ObservableCollection<NetbarItem> NetbarList {
@@ -36,6 +39,12 @@ namespace NetbarIpAddrImporter {
         public ImportCommand ImportCommand {
             get {
                 return importCommand;
+            }
+        }
+
+        public DeleteCommand DeleteCommand {
+            get {
+                return deleteCommand;
             }
         }
 

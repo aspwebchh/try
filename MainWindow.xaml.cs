@@ -21,12 +21,14 @@ namespace NetbarIpAddrImporter {
     /// MainWindow.xaml 的交互逻辑
     /// </summary>
     public partial class MainWindow : Window {
-        private MainWindowViewModel viewModel;
+        public static MainWindow instance;
 
         public MainWindow() {
             InitializeComponent();
 
-            viewModel = new MainWindowViewModel();
+            instance = this;
+
+            var viewModel = new MainWindowViewModel();
             this.DataContext = viewModel;
         }
     }

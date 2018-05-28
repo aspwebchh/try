@@ -39,6 +39,7 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Services" />
@@ -64,7 +65,11 @@
     </ApplicationDefinition>
     <Compile Include="Data.cs" />
     <Compile Include="Data1.cs" />
+    <Compile Include="DeleteNetbar.xaml.cs">
+      <DependentUpon>DeleteNetbar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ExcelReader.cs" />
+    <Compile Include="DeleteCommand.cs" />
     <Compile Include="IPList.cs" />
     <Compile Include="ImportCommand.cs" />
     <Compile Include="LoadExcelCommand.cs" />
@@ -75,6 +80,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.map</DependentUpon>
     </Compile>
+    <Page Include="DeleteNetbar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
